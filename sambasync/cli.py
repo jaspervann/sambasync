@@ -263,7 +263,7 @@ def parser() -> argparse.ArgumentParser:
     deleting = commands.add_parser('delete', help='Remove a share, optionally deleting local files')
     deleting.add_argument('name')
     deleting.add_argument('--delete-data', action='store_true', help='Permanently delete local files after typing the share name')
-    syncing = commands.add_parser('sync', help='Mirror one share or all shares to their backups')
+    syncing = commands.add_parser('sync', help='Mirror one share (or all shares) to its rsync backup destination')
     syncing.add_argument('name', nargs='?')
     syncing.add_argument('--all', action='store_true', help='Sync every share sequentially in smb.conf order')
     syncing.add_argument('--dry-run', action='store_true', help='Preview transfers and deletions without changing the backup')
