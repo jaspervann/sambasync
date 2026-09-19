@@ -1,0 +1,13 @@
+[storage]
+root = "/mnt/data"
+
+[samba]
+config = "/etc/samba/smb.conf"
+user = "john"
+
+[rsync]
+host = "x4g7d3.quickconnect.synology.com"
+port = 22
+user = "johndoe"
+password = "SuperSecret123"
+root = ""
