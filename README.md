@@ -87,12 +87,12 @@ With the example configuration above, `./smbsync list` prints:
 ```text
 Documents
   Local:  /mnt/data/docs
-  Remote: john@x4g7d3.quickconnect.synology.com::Documents/
+  Remote: johnny@x4g7d3.quickconnect.synology.com::Documents/
   Users:  john
 
 Virtual Disks
-  Local:  /mnt/data/vdisk
-  Remote: john@x4g7d3.quickconnect.synology.com::Virtual Disks/
+  Local:  /mnt/data/vdisks
+  Remote: johnny@x4g7d3.quickconnect.synology.com::Virtual Disks/
   Users:  john
 ```
 
