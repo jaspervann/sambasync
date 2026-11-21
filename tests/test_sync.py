@@ -95,7 +95,10 @@ class SyncTests(unittest.TestCase):
         command = run.call_args.args[0]
         self.assertEqual(command[:5], ["rsync", "-avh", "--delete", "--info=progress2", "--protect-args"])
         self.assertIn("--dry-run", command)
-        self.assertEqual(shlex.split(command[command.index("-e") + 1]), ["ssh", "-p", "2233", "-l", "jasper"])
+        self.assertEqual(
+            shlex.split(command[command.index("-e") + 1]),
+            ["ssh", "-o", "StrictHostKeyChecking=accept-new", "-p", "2233", "-l", "jasper"],
+        )
         self.assertEqual(command[-3:], ["--", f"{self.directory}/", "jasper@johannessy.jappa.nl::NetBackup/Virtual Disks/"])
         self.assertNotIn("shell", run.call_args.kwargs)
 
@@ -114,8 +117,10 @@ class SyncTests(unittest.TestCase):
             self.assertEqual(kwargs["pass_fds"], (fd,))
             self.assertEqual(stat.S_IMODE(os.fstat(fd).st_mode), 0o600)
             self.assertEqual(os.read(fd, 100), b"ssh secret\n")
-            self.assertEqual(shlex.split(command[command.index("-e") + 1]),
-                             ["ssh", "-p", "2233", "-l", "ssh-login"])
+            self.assertEqual(
+                shlex.split(command[command.index("-e") + 1]),
+                ["ssh", "-o", "StrictHostKeyChecking=accept-new", "-p", "2233", "-l", "ssh-login"],
+            )
             return subprocess.CompletedProcess(command, 0)
 
         run.side_effect = inspect_call

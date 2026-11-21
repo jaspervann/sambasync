@@ -58,7 +58,7 @@ The connection uses an **rsync module over SSH**. Each share module must already
 
 A configured password is supplied to SSH through `sshpass` using a private file descriptor, never a command-line argument. A file containing a password must have no group/other permissions and be owned by the invoking user or root. When running with `sudo`, that means root ownership; mode `600` is suitable. `settings.toml` is ignored by version control.
 
-SSH uses the invoking account's keys and known hosts, normally root's when using `sudo`. The CLI does not disable host-key verification.
+SSH uses the invoking account's keys and known hosts, normally root's when using `sudo`. On the first connection to a new hostname, the CLI uses OpenSSH's `accept-new` policy to add its key automatically. A changed key for a hostname already in `known_hosts` is still refused, so an unexpected `Host key verification failed` must be investigated rather than bypassed.
 
 ## Commands
 

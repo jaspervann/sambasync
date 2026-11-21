@@ -105,7 +105,13 @@ def sync_share(settings: Settings, share: Share, dry_run: bool = False) -> int:
     if isinstance(rsync.port, bool) or not isinstance(rsync.port, int) or not 1 <= rsync.port <= 65535:
         raise NasError("SSH port must be an integer between 1 and 65535.")
     _check_password(rsync.password, "SSH password")
-    ssh = ["ssh", "-p", str(rsync.port), "-l", rsync.user]
+    # Trust-on-first-use lets password-based, noninteractive invocations add a
+    # previously unseen hostname. SSH still refuses a changed key, unlike
+    # StrictHostKeyChecking=no.
+    ssh = [
+        "ssh", "-o", "StrictHostKeyChecking=accept-new",
+        "-p", str(rsync.port), "-l", rsync.user,
+    ]
     source = check_source(settings, share)
     command = ["rsync", "-avh", "--delete", "--info=progress2", "--protect-args"]
     if dry_run:
